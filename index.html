@@ -1,11 +1,33 @@
-<script>
-const params = new URLSearchParams(window.location.search);
-const slug = params.get("business");
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookFlow Chat</title>
+</head>
 
-document.body.insertAdjacentHTML(
-  "beforeend",
-  `<p><strong>Business:</strong> ${slug}</p>`
-);
+<body>
 
-console.log("Business slug:", slug);
-</script>
+    <h2>BookFlow Chat</h2>
+
+    <div id="business-info"></div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get("business");
+
+        const businessInfo = document.getElementById("business-info");
+
+        if (slug) {
+            businessInfo.innerHTML =
+                `<p><strong>Business:</strong> ${slug}</p>`;
+
+            console.log("Business slug:", slug);
+        } else {
+            businessInfo.innerHTML =
+                "<p>Липсва business параметър в адреса.</p>";
+        }
+    </script>
+
+</body>
+</html>
