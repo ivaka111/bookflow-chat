@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookFlow Chat</title>
-</head>
-
-<body>
-
-<h2>BookFlow Chat</h2>
-
-<div id="n8n-chat"></div>
-
 <script>
-const slug = window.location.pathname.split("/").pop();
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("business");
+
+document.body.insertAdjacentHTML(
+  "beforeend",
+  `<p><strong>Business:</strong> ${slug}</p>`
+);
 
 console.log("Business slug:", slug);
 </script>
-
-</body>
-</html>
