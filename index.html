@@ -3,92 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>BookFlow Chat</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
-        rel="stylesheet"
-    >
-
+    <meta name="theme-color" content="#111827">
+    <title>Онлайн резервации | BookFlow</title>
+    <meta name="description" content="Запазете, променете или отменете своя час бързо и удобно с BookFlow.">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
     <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+        :root {
+            --page-bg: #f4f7fb;
+            --surface-solid: #ffffff;
+            --text: #111827;
+            --muted: #667085;
+            --line: #e5e7eb;
+            --brand: #111827;
+            --accent: #4f46e5;
+            --success: #16a34a;
+            --shadow: 0 24px 70px rgba(15, 23, 42, 0.13);
+
+            --chat--color-primary: #111827;
+            --chat--color-primary-shade-50: #273449;
+            --chat--color-primary-shade-100: #0b1220;
+            --chat--color-secondary: #4f46e5;
+            --chat--color-secondary-shade-50: #4338ca;
+            --chat--color-white: #ffffff;
+            --chat--color-light: #f8fafc;
+            --chat--color-light-shade-50: #eef2f7;
+            --chat--color-light-shade-100: #e2e8f0;
+            --chat--color-medium: #cbd5e1;
+            --chat--color-dark: #111827;
+            --chat--color-disabled: #98a2b3;
+            --chat--color-typing: #667085;
+            --chat--spacing: 1rem;
+            --chat--border-radius: 1rem;
+            --chat--transition-duration: 0.18s;
+            --chat--header-height: auto;
+            --chat--header--padding: 1.05rem 1.15rem;
+            --chat--header--background: #111827;
+            --chat--header--color: #ffffff;
+            --chat--heading--font-size: 1.1rem;
+            --chat--subtitle--font-size: 0.82rem;
+            --chat--subtitle--line-height: 1.4;
+            --chat--message--font-size: 0.96rem;
+            --chat--message--padding: 0.78rem 0.95rem;
+            --chat--message--border-radius: 1rem;
+            --chat--message-line-height: 1.5;
+            --chat--message--margin-bottom: 0.8rem;
+            --chat--message--bot--background: #ffffff;
+            --chat--message--bot--color: #1f2937;
+            --chat--message--bot--border: 1px solid #e7eaf0;
+            --chat--message--user--background: #111827;
+            --chat--message--user--color: #ffffff;
+            --chat--message--user--border: none;
+            --chat--messages-list--padding: 1rem;
+            --chat--body--background: #f7f8fb;
+            --chat--footer--background: #ffffff;
+            --chat--footer--color: #667085;
+            --chat--textarea--height: 52px;
+            --chat--textarea--max-height: 150px;
+            --chat--input--font-size: 0.96rem;
+            --chat--input--border: 1px solid #dfe3ea;
+            --chat--input--border-radius: 0.9rem;
+            --chat--input--padding: 0.75rem 0.85rem;
+            --chat--input--background: #ffffff;
+            --chat--input--text-color: #111827;
+            --chat--input--line-height: 1.45;
+            --chat--input--border-active: 1px solid #111827;
+            --chat--button--color: #ffffff;
+            --chat--button--background: #111827;
+            --chat--button--padding: 0.65rem 1rem;
+            --chat--button--border-radius: 0.8rem;
+            --chat--button--hover--color: #ffffff;
+            --chat--button--hover--background: #273449;
+            --chat--input--send--button--background: #111827;
+            --chat--input--send--button--color: #ffffff;
+            --chat--input--send--button--background-hover: #273449;
+            --chat--input--send--button--color-hover: #ffffff;
         }
 
-        #n8n-chat {
-            width: 100%;
-            height: 100%;
+        * { box-sizing: border-box; }
+        html, body { width: 100%; min-height: 100%; margin: 0; }
+
+        body {
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at 8% 8%, rgba(79, 70, 229, 0.10), transparent 26rem),
+                radial-gradient(circle at 92% 84%, rgba(14, 165, 233, 0.10), transparent 28rem),
+                var(--page-bg);
         }
+
+        .page-shell {
+            min-height: 100svh;
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(420px, 0.78fr);
+            gap: clamp(28px, 5vw, 80px);
+            align-items: center;
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 34px 0;
+        }
+
+        .intro { max-width: 590px; padding: 20px 0; }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            margin-bottom: 56px;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: var(--brand);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(17, 24, 39, 0.18);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            padding: 8px 12px;
+            color: #344054;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(229, 231, 235, 0.95);
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            box-shadow: 0 7px 24px rgba(15, 23, 42, 0.05);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.12);
+        }
+
+        h1 {
+            max-width: 690px;
+            margin: 0;
+            font-size: clamp(2.7rem, 5.2vw, 5.2rem);
+            line-height: 0.98;
+            letter-spacing: -0.065em;
+        }
+
+        .business-name { color: var(--accent); }
+
+        .lead {
+            max-width: 570px;
+            margin: 25px 0 0;
+            color: var(--muted);
+            font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+            line-height: 1.7;
+        }
+
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 22px;
+            margin: 34px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .benefits li {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #344054;
+            font-size: 0.92rem;
+            font-weight: 650;
+        }
+
+        .check {
+            width: 22px;
+            height: 22px;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: var(--brand);
+            border-radius: 50%;
+            font-size: 0.73rem;
+        }
+
+        .privacy-note {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 38px;
+            color: #7a8494;
+            font-size: 0.78rem;
+        }
+
+        .chat-column { width: 100%; }
+
+        .chat-card {
+            position: relative;
+            height: min(790px, calc(100svh - 68px));
+            min-height: 630px;
+            overflow: hidden;
+            background: var(--surface-solid);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+            border: 1px solid rgba(17, 24, 39, 0.06);
+            border-radius: inherit;
+        }
+
+        #n8n-chat { width: 100%; height: 100%; }
+        #n8n-chat .chat-layout { height: 100%; border-radius: 28px; }
+        #n8n-chat .chat-header { box-shadow: 0 8px 25px rgba(17, 24, 39, 0.12); }
+        #n8n-chat .chat-message { max-width: 82%; box-shadow: 0 5px 18px rgba(15, 23, 42, 0.055); }
+        #n8n-chat .chat-input { gap: 10px; padding: 12px; border-top: 1px solid #edf0f4; }
+        #n8n-chat textarea { resize: none; }
 
         #error-message {
             display: none;
-            max-width: 600px;
-            margin: 60px auto;
-            padding: 24px;
-            background: white;
-            border-radius: 12px;
+            width: min(520px, calc(100% - 32px));
+            margin: 12vh auto 0;
+            padding: 34px;
             text-align: center;
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        #error-message .error-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 16px;
+            color: #b42318;
+            background: #fee4e2;
+            border-radius: 16px;
+            font-size: 1.4rem;
+        }
+
+        #error-message h2 { margin: 0 0 8px; font-size: 1.45rem; }
+        #error-message p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+        @media (max-width: 900px) {
+            body { background: #ffffff; }
+            .page-shell { display: block; width: 100%; min-height: 100svh; padding: 0; }
+            .intro { display: none; }
+            .chat-card { height: 100svh; min-height: 100svh; border: 0; border-radius: 0; box-shadow: none; }
+            .chat-card::before, #n8n-chat .chat-layout { border-radius: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
-
 <body>
+    <main id="app" class="page-shell">
+        <section class="intro" aria-labelledby="page-title">
+            <div class="brand" aria-label="BookFlow">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 4.5h10a2.5 2.5 0 0 1 2.5 2.5v7A2.5 2.5 0 0 1 17 16.5h-4.4L8 20v-3.5H7A2.5 2.5 0 0 1 4.5 14V7A2.5 2.5 0 0 1 7 4.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M8 9h8M8 12.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                BookFlow
+            </div>
 
-    <div id="n8n-chat"></div>
+            <div class="eyebrow">
+                <span class="status-dot"></span>
+                Асистентът е на линия
+            </div>
 
-    <div id="error-message">
+            <h1 id="page-title">
+                Запазете час в
+                <span id="business-name" class="business-name">нашия салон</span>
+            </h1>
+
+            <p class="lead">
+                Кажете каква услуга желаете и BookFlow ще ви помогне да
+                изберете удобни дата и час — без телефонни разговори.
+            </p>
+
+            <ul class="benefits" aria-label="Предимства">
+                <li><span class="check">✓</span> Достъпно 24/7</li>
+                <li><span class="check">✓</span> Потвърждение веднага</li>
+                <li><span class="check">✓</span> Лесна промяна или отмяна</li>
+            </ul>
+
+            <div class="privacy-note">
+                <span aria-hidden="true">🔒</span>
+                Данните ви се използват единствено за управление на резервацията.
+            </div>
+        </section>
+
+        <section class="chat-column" aria-label="Чат за онлайн резервации">
+            <div class="chat-card">
+                <div id="n8n-chat"></div>
+            </div>
+        </section>
+    </main>
+
+    <section id="error-message" role="alert">
+        <div class="error-icon" aria-hidden="true">!</div>
         <h2>Невалиден чат адрес</h2>
-        <p>В линка липсва бизнес идентификатор.</p>
-    </div>
+        <p>В линка липсва бизнес идентификатор. Моля, използвайте пълния адрес, предоставен от бизнеса.</p>
+    </section>
 
     <script type="module">
-        import { createChat } from
-            'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
         const params = new URLSearchParams(window.location.search);
-        const slug = params.get('business');
+        const slug = params.get('business')?.trim();
+
+        const businesses = {
+            'atanasova-nails': { name: 'Atanasova Nails', accent: '#9d174d' },
+            'place-barber': { name: 'Place Barber', accent: '#b7791f' },
+            'mens-place': { name: "Men's Place", accent: '#b7791f' }
+        };
+
+        function formatBusinessName(value) {
+            return value
+                .split('-')
+                .filter(Boolean)
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
 
         if (!slug) {
-            document.getElementById('n8n-chat').style.display = 'none';
+            document.getElementById('app').style.display = 'none';
             document.getElementById('error-message').style.display = 'block';
         } else {
+            const business = businesses[slug] ?? {
+                name: formatBusinessName(slug),
+                accent: '#4f46e5'
+            };
 
-            
+            document.getElementById('business-name').textContent = business.name;
+            document.documentElement.style.setProperty('--accent', business.accent);
+            document.title = `${business.name} | Онлайн резервации`;
+
             localStorage.removeItem('n8n-chat/sessionId');
             localStorage.removeItem('n8n-chat/messages');
 
-            
             createChat({
                 webhookUrl: 'https://ivaka.app.n8n.cloud/webhook/ba1b3402-4c1b-4991-a199-89fb4aa95e3d/chat',
-
                 target: '#n8n-chat',
-
                 mode: 'fullscreen',
-                
-loadPreviousSession: false,
-             
-                metadata: {
-                    business_slug: slug
-                },
-
+                loadPreviousSession: false,
+                metadata: { business_slug: slug },
                 showWelcomeScreen: false,
-
                 initialMessages: [
-                    'Здравейте! 👋',
-                    'Как мога да ви помогна с вашата резервация?'
+                    `Здравейте! 👋 Аз съм онлайн асистентът на ${business.name}.`,
+                    'Мога да ви помогна да запазите, промените или отмените час.'
                 ],
-
                 i18n: {
                     en: {
-                        title: 'Онлайн резервации',
-                        subtitle: 'Изберете услуга и удобен час.',
-                        footer: '',
+                        title: business.name,
+                        subtitle: 'Онлайн асистент за резервации • На линия',
+                        footer: 'Powered by BookFlow',
                         getStarted: 'Нов разговор',
                         inputPlaceholder: 'Напишете съобщение...'
                     }
@@ -98,6 +392,6 @@ loadPreviousSession: false,
             console.log('BookFlow business slug:', slug);
         }
     </script>
-
 </body>
 </html>
+
