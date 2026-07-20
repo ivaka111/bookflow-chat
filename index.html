@@ -58,6 +58,12 @@
             document.getElementById('n8n-chat').style.display = 'none';
             document.getElementById('error-message').style.display = 'block';
         } else {
+
+            
+            localStorage.removeItem('n8n-chat/sessionId');
+            localStorage.removeItem('n8n-chat/messages');
+
+            
             createChat({
                 webhookUrl: 'https://ivaka.app.n8n.cloud/webhook/ba1b3402-4c1b-4991-a199-89fb4aa95e3d/chat',
 
