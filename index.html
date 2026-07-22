@@ -276,6 +276,138 @@
                 transition-duration: 0.01ms !important;
             }
         }
+        /* Fix за iPhone автоматично уголемяване на текста */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+@media (max-width: 900px) {
+    :root {
+        --chat--spacing: 0.7rem;
+
+        --chat--header--padding: 0.8rem 1rem;
+        --chat--heading--font-size: 1rem;
+        --chat--subtitle--font-size: 0.75rem;
+
+        --chat--message--font-size: 0.92rem;
+        --chat--message--padding: 0.68rem 0.8rem;
+        --chat--message--border-radius: 0.9rem;
+        --chat--message-line-height: 1.4;
+        --chat--message--margin-bottom: 0.6rem;
+        --chat--messages-list--padding: 0.7rem;
+
+        --chat--input--font-size: 16px;
+        --chat--input--padding: 0.7rem 0.75rem;
+        --chat--textarea--height: 48px;
+    }
+
+    body {
+        overflow: hidden;
+        background: #ffffff;
+    }
+
+    .page-shell,
+    .chat-column,
+    .chat-card,
+    #n8n-chat {
+        width: 100%;
+        height: 100dvh;
+        min-height: 100dvh;
+    }
+
+    .page-shell {
+        display: block;
+        padding: 0;
+    }
+
+    .intro {
+        display: none;
+    }
+
+    .chat-card {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: hidden;
+    }
+
+    .chat-card::before,
+    #n8n-chat .chat-layout {
+        border-radius: 0;
+    }
+
+    #n8n-chat .chat-layout {
+        height: 100dvh;
+        min-height: 100dvh;
+    }
+
+    /* По-компактен header */
+    #n8n-chat .chat-header {
+        flex: 0 0 auto;
+        padding-top: max(0.8rem, env(safe-area-inset-top));
+    }
+
+    #n8n-chat .chat-header h1,
+    #n8n-chat .chat-header h2,
+    #n8n-chat .chat-heading {
+        margin: 0;
+        font-size: 1rem !important;
+        line-height: 1.25 !important;
+    }
+
+    #n8n-chat .chat-header p,
+    #n8n-chat .chat-subtitle {
+        margin-top: 0.25rem;
+        font-size: 0.75rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* По-компактни съобщения */
+    #n8n-chat .chat-message {
+        max-width: 86%;
+        font-size: 0.92rem !important;
+        line-height: 1.4 !important;
+        overflow-wrap: anywhere;
+    }
+
+    #n8n-chat .chat-message p {
+        margin: 0;
+    }
+
+    /* Полето долу да не влиза под iPhone лентата */
+    #n8n-chat .chat-input {
+        flex: 0 0 auto;
+        padding:
+            10px
+            10px
+            max(10px, env(safe-area-inset-bottom));
+        background: #ffffff;
+    }
+
+    /* 16px спира автоматичния zoom на iPhone */
+    #n8n-chat textarea,
+    #n8n-chat input {
+        font-size: 16px !important;
+    }
+
+    #n8n-chat button {
+        min-width: 46px;
+        min-height: 46px;
+    }
+}
+
+@media (max-width: 390px) {
+    :root {
+        --chat--message--font-size: 0.88rem;
+        --chat--message--padding: 0.62rem 0.72rem;
+    }
+
+    #n8n-chat .chat-message {
+        max-width: 89%;
+        font-size: 0.88rem !important;
+    }
+}
     </style>
 </head>
 <body>
