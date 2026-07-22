@@ -262,11 +262,51 @@
         #error-message p { margin: 0; color: var(--muted); line-height: 1.6; }
 
         @media (max-width: 900px) {
-            body { background: #ffffff; }
-            .page-shell { display: block; width: 100%; min-height: 100svh; padding: 0; }
-            .intro { display: none; }
-            .chat-card { height: 100svh; min-height: 100svh; border: 0; border-radius: 0; box-shadow: none; }
-            .chat-card::before, #n8n-chat .chat-layout { border-radius: 0; }
+            :root {
+                --chat--spacing: 0.7rem;
+                --chat--message--font-size: 0.93rem;
+                --chat--message--padding: 0.72rem 0.85rem;
+                --chat--message--border-radius: 1rem;
+                --chat--message-line-height: 1.42;
+                --chat--message--margin-bottom: 0.62rem;
+                --chat--messages-list--padding: 0.8rem;
+                --chat--input--font-size: 16px;
+                --chat--textarea--height: 48px;
+            }
+            html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+            body { overflow: hidden; background: #f6f7fb; }
+            .page-shell { display:block; width:100%; height:100dvh; min-height:100dvh; padding:0; }
+            .intro { display:none; }
+            .chat-column { display:grid; grid-template-rows:auto minmax(0,1fr); width:100%; height:100dvh; min-height:100dvh; }
+            .mobile-app-header {
+                display:flex; align-items:center; gap:12px; min-height:74px;
+                padding:max(12px, env(safe-area-inset-top)) 16px 12px;
+                background:rgba(255,255,255,.94); border-bottom:1px solid rgba(17,24,39,.08);
+                backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); z-index:20;
+            }
+            .mobile-app-avatar { width:42px; height:42px; display:grid; place-items:center; flex:0 0 auto; color:#fff; background:#111827; border-radius:14px; font-size:18px; box-shadow:0 8px 20px rgba(17,24,39,.16); }
+            .mobile-app-copy { min-width:0; display:flex; flex:1; flex-direction:column; gap:3px; }
+            .mobile-app-copy strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:1rem; line-height:1.2; }
+            .mobile-app-copy span { display:flex; align-items:center; gap:7px; color:#667085; font-size:.76rem; }
+            .mobile-app-copy i { width:7px; height:7px; background:#22c55e; border-radius:50%; box-shadow:0 0 0 4px rgba(34,197,94,.12); }
+            .mobile-bookflow { color:#98a2b3; font-size:.72rem; font-weight:700; }
+            .chat-card,#n8n-chat { width:100%; height:100%; min-height:0; }
+            .chat-card { overflow:hidden; border:0; border-radius:0; box-shadow:none; background:transparent; }
+            .chat-card::before,#n8n-chat .chat-layout { border-radius:0; }
+            #n8n-chat .chat-layout { height:100%; min-height:0; background:transparent; }
+            #n8n-chat .chat-header { display:none !important; }
+            #n8n-chat .chat-body,#n8n-chat .chat-messages-list { min-height:0; }
+            #n8n-chat .chat-messages-list { padding-top:14px; padding-bottom:16px; }
+            #n8n-chat .chat-message { max-width:84%; font-size:.93rem !important; line-height:1.42 !important; overflow-wrap:anywhere; box-shadow:0 5px 16px rgba(15,23,42,.06); }
+            #n8n-chat .chat-message p { margin:0; }
+            #n8n-chat .chat-input { flex:0 0 auto; gap:9px; padding:10px 10px max(10px, env(safe-area-inset-bottom)); background:rgba(255,255,255,.96); border-top:1px solid rgba(17,24,39,.08); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+            #n8n-chat textarea,#n8n-chat input { min-height:48px; font-size:16px !important; background:#f8fafc !important; border:1px solid #e4e7ec !important; border-radius:16px !important; }
+            #n8n-chat button { min-width:48px; min-height:48px; border-radius:16px !important; box-shadow:0 7px 18px rgba(17,24,39,.14); }
+        }
+
+        @media (max-width:390px) {
+            #n8n-chat .chat-message { max-width:88%; font-size:.89rem !important; }
+            .mobile-bookflow { display:none; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -276,138 +316,6 @@
                 transition-duration: 0.01ms !important;
             }
         }
-        /* Fix за iPhone автоматично уголемяване на текста */
-html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-}
-
-@media (max-width: 900px) {
-    :root {
-        --chat--spacing: 0.7rem;
-
-        --chat--header--padding: 0.8rem 1rem;
-        --chat--heading--font-size: 1rem;
-        --chat--subtitle--font-size: 0.75rem;
-
-        --chat--message--font-size: 0.92rem;
-        --chat--message--padding: 0.68rem 0.8rem;
-        --chat--message--border-radius: 0.9rem;
-        --chat--message-line-height: 1.4;
-        --chat--message--margin-bottom: 0.6rem;
-        --chat--messages-list--padding: 0.7rem;
-
-        --chat--input--font-size: 16px;
-        --chat--input--padding: 0.7rem 0.75rem;
-        --chat--textarea--height: 48px;
-    }
-
-    body {
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-    .page-shell,
-    .chat-column,
-    .chat-card,
-    #n8n-chat {
-        width: 100%;
-        height: 100dvh;
-        min-height: 100dvh;
-    }
-
-    .page-shell {
-        display: block;
-        padding: 0;
-    }
-
-    .intro {
-        display: none;
-    }
-
-    .chat-card {
-        border: 0;
-        border-radius: 0;
-        box-shadow: none;
-        overflow: hidden;
-    }
-
-    .chat-card::before,
-    #n8n-chat .chat-layout {
-        border-radius: 0;
-    }
-
-    #n8n-chat .chat-layout {
-        height: 100dvh;
-        min-height: 100dvh;
-    }
-
-    /* По-компактен header */
-    #n8n-chat .chat-header {
-        flex: 0 0 auto;
-        padding-top: max(0.8rem, env(safe-area-inset-top));
-    }
-
-    #n8n-chat .chat-header h1,
-    #n8n-chat .chat-header h2,
-    #n8n-chat .chat-heading {
-        margin: 0;
-        font-size: 1rem !important;
-        line-height: 1.25 !important;
-    }
-
-    #n8n-chat .chat-header p,
-    #n8n-chat .chat-subtitle {
-        margin-top: 0.25rem;
-        font-size: 0.75rem !important;
-        line-height: 1.3 !important;
-    }
-
-    /* По-компактни съобщения */
-    #n8n-chat .chat-message {
-        max-width: 86%;
-        font-size: 0.92rem !important;
-        line-height: 1.4 !important;
-        overflow-wrap: anywhere;
-    }
-
-    #n8n-chat .chat-message p {
-        margin: 0;
-    }
-
-    /* Полето долу да не влиза под iPhone лентата */
-    #n8n-chat .chat-input {
-        flex: 0 0 auto;
-        padding:
-            10px
-            10px
-            max(10px, env(safe-area-inset-bottom));
-        background: #ffffff;
-    }
-
-    /* 16px спира автоматичния zoom на iPhone */
-    #n8n-chat textarea,
-    #n8n-chat input {
-        font-size: 16px !important;
-    }
-
-    #n8n-chat button {
-        min-width: 46px;
-        min-height: 46px;
-    }
-}
-
-@media (max-width: 390px) {
-    :root {
-        --chat--message--font-size: 0.88rem;
-        --chat--message--padding: 0.62rem 0.72rem;
-    }
-
-    #n8n-chat .chat-message {
-        max-width: 89%;
-        font-size: 0.88rem !important;
-    }
-}
     </style>
 </head>
 <body>
@@ -451,6 +359,14 @@ html {
         </section>
 
         <section class="chat-column" aria-label="Чат за онлайн резервации">
+            <div class="mobile-app-header">
+                <div class="mobile-app-avatar" aria-hidden="true">💬</div>
+                <div class="mobile-app-copy">
+                    <strong id="mobile-business-name">Онлайн резервации</strong>
+                    <span><i></i> Асистентът е на линия</span>
+                </div>
+                <div class="mobile-bookflow">BookFlow</div>
+            </div>
             <div class="chat-card">
                 <div id="n8n-chat"></div>
             </div>
@@ -493,6 +409,7 @@ html {
             };
 
             document.getElementById('business-name').textContent = business.name;
+            document.getElementById('mobile-business-name').textContent = business.name;
             document.documentElement.style.setProperty('--accent', business.accent);
             document.title = `${business.name} | Онлайн резервации`;
 
@@ -513,7 +430,7 @@ html {
                 i18n: {
                     en: {
                         title: business.name,
-                        subtitle: 'Онлайн асистент за резервации • На линия',
+                        subtitle: 'Онлайн резервации • На линия',
                         footer: 'Powered by BookFlow',
                         getStarted: 'Нов разговор',
                         inputPlaceholder: 'Напишете съобщение...'
@@ -526,4 +443,3 @@ html {
     </script>
 </body>
 </html>
-
